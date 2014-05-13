@@ -19,3 +19,15 @@
 *.exe
 *.out
 *.app
+
+# Imported from Flavio's
+meld
+print
+*.code
+*.ast
+Makefile.externs
+.,*
+predicates
+server
+simulator
+*.swp
