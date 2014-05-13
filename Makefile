@@ -109,6 +109,25 @@ SRCS = utils/utils.cpp \
 			 db/linked_list.c \
 			 db/linked_list_cpp.cpp 
 
+# Dummy files:
+#vm/exec.cpp \
+	vm/dummy-external.cpp \
+	vm/dummy-program.cpp \
+	vm/dummy-rule_matcher.cpp \
+	vm/dummy-state.cpp \
+	vm/dummy-tuple.cpp \
+	db/dummy-database.cpp \
+	db/dummy-hash_table.cpp \
+	db/dummy-node.cpp \
+	db/dummy-trie.cpp \
+	db/dummy-tuple.cpp \
+	mem/dummy-center.cpp \
+	process/dummy-machine.cpp \
+	sched/dummy-base.cpp \
+	stat/dummy-stat.cpp \
+	utils/dummy-fs.cpp \
+	dummy-interface.cpp
+
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
 all: meld print server simulator
