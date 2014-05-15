@@ -61,79 +61,62 @@ CXXFLAGS = $(CFLAGS)
 LDFLAGS = $(PROFILING) $(LIBRARY_DIRS) $(LIBRARIES)
 COMPILE = $(CXX) $(CXXFLAGS) $(OBJS)
 
-SRCS = vm/exec.cpp \
-	vm/dummy-external.cpp \
-	vm/dummy-program.cpp \
-	vm/dummy-rule_matcher.cpp \
-	vm/dummy-state.cpp \
-	vm/dummy-tuple.cpp \
-	db/dummy-database.cpp \
-	db/dummy-hash_table.cpp \
-	db/dummy-node.cpp \
-	db/dummy-trie.cpp \
-	db/dummy-tuple.cpp \
-	mem/dummy-center.cpp \
-	process/dummy-machine.cpp \
-	sched/dummy-base.cpp \
-	stat/dummy-stat.cpp \
-	utils/dummy-fs.cpp \
-	dummy-interface.cpp
+SRCS = utils/utils.cpp \
+	utils/types.cpp \
+	utils/fs.cpp \
+	vm/program.cpp \
+	vm/predicate.cpp \
+	vm/types.cpp \
+	vm/instr.cpp \
+	vm/state.cpp \
+	vm/tuple.cpp \
+	vm/exec.cpp \
+	vm/external.cpp \
+	vm/rule.cpp \
+	vm/rule_matcher.cpp \
+	vm/stat.cpp \
+	db/node.cpp \
+	db/tuple.cpp \
+	db/agg_configuration.cpp \
+	db/tuple_aggregate.cpp \
+	db/database.cpp \
+	db/trie.cpp \
+	db/hash_table.cpp \
+	process/machine.cpp \
+	process/remote.cpp \
+	process/router.cpp \
+	mem/thread.cpp \
+	mem/center.cpp \
+	mem/stat.cpp \
+	sched/base.cpp \
+	sched/common.cpp \
+	sched/serial.cpp \
+	sched/serial_ui.cpp \
+	thread/threads.cpp \
+	thread/prio.cpp \
+	sched/thread/threaded.cpp \
+	sched/thread/assert.cpp \
+	external/math.cpp \
+	external/lists.cpp \
+	external/utils.cpp \
+	external/strings.cpp \
+	external/others.cpp \
+	external/core.cpp \
+	external/structs.cpp \
+	stat/stat.cpp \
+	stat/slice.cpp \
+	stat/slice_set.cpp \
+	ui/manager.cpp \
+	ui/client.cpp \
+	interface.cpp \
+	sched/sim.cpp \
+	jit/build.cpp \
+	db/linked_list.cpp
 
-	#utils/utils.cpp \
-		 	utils/types.cpp \
-			utils/fs.cpp \
-			 vm/program.cpp \
-			 vm/predicate.cpp \
-			 vm/types.cpp \
-			 vm/instr.cpp \
-			 vm/state.cpp \
-			 vm/tuple.cpp \
-			 vm/exec.cpp \
-			 vm/external.cpp \
-			 vm/rule.cpp \
-			 vm/rule_matcher.cpp \
-			 vm/stat.cpp \
-			 db/node.cpp \
-			 db/tuple.cpp \
-			 db/agg_configuration.cpp \
-			 db/tuple_aggregate.cpp \
-			 db/database.cpp \
-			 db/trie.cpp \
-			 db/hash_table.cpp \
-			 process/machine.cpp \
-			 process/remote.cpp \
-			 process/router.cpp \
-			 mem/thread.cpp \
-			 mem/center.cpp \
-			 mem/stat.cpp \
-			 sched/base.cpp \
-			 sched/common.cpp \
-			 sched/serial.cpp \
-			 sched/serial_ui.cpp \
-			 thread/threads.cpp \
-			 thread/prio.cpp \
-			 sched/thread/threaded.cpp \
-			 sched/thread/assert.cpp \
-			 external/math.cpp \
-			 external/lists.cpp \
-			 external/utils.cpp \
-			 external/strings.cpp \
-			 external/others.cpp \
-			 external/core.cpp \
-			 external/structs.cpp \
-			 stat/stat.cpp \
-			 stat/slice.cpp \
-			 stat/slice_set.cpp \
-			 ui/manager.cpp \
-			 ui/client.cpp \
-			 interface.cpp \
-			 sched/sim.cpp \
-			 jit/build.cpp 
-
-#ifeq ($(BB), true)
-#	SRCS += db/linked_list.c \
-#	       db/linked_list_cpp.cpp
-#endif
+ifeq ($(BB), true)
+	C-SRCS= c-db/linked_list.c \
+		c-db/c-tuple.cpp
+endif
 
 # Dummy files:
 #vm/exec.cpp \
@@ -154,7 +137,7 @@ SRCS = vm/exec.cpp \
 	utils/dummy-fs.cpp \
 	dummy-interface.cpp
 
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+OBJS = $(patsubst %.cpp,%.o,$(SRCS) $(C-SRCS))
 
 all: meld print server simulator
 
@@ -162,7 +145,7 @@ all: meld print server simulator
 Makefile.externs:	Makefile
 	@echo "Remaking Makefile.externs"
 	@/bin/rm -f Makefile.externs
-	@for i in $(SRCS); do $(CXX) $(CXXFLAGS) -MM -MT $${i/%.cpp/.o} $$i >> Makefile.externs; done
+	@for i in $(SRCS) $(C-SRCS); do $(CXX) $(CXXFLAGS) -MM -MT $${i/%.cpp/.o} $$i >> Makefile.externs; done
 	@echo "Makefile.externs ready"
 
 meld: $(OBJS) meld.o
