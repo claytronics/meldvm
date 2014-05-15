@@ -1,7 +1,5 @@
 
 #include "db/linked_list.hpp"
-#include "vm/tuple.hpp"
-#include "vm/predicate.hpp"
 
 void
 print_tuple(void *tpl, void *pred) 

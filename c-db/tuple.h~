@@ -1,0 +1,48 @@
+#ifndef DB_TUPLE_H
+#define DB_TUPLE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+  
+  VM_tuple* get_tuple(simpleTuple* s);   
+  VM_strat_level get_strat_level(simpleTuple* s);
+
+  VM_predicate* get_predicate(simpleTuple* s);
+   
+  VM_predicate_id get_predicate_id(simpleTuple* s);
+
+  bool is_aggregate(simpleTuple* s);
+  void set_as_aggregate(simpleTuple* s);
+
+  void print(std::ostream&);
+
+  VM_derivation_count get_count(simpleTuple* s);
+  bool reached_zero(simpleTuple* s);
+  void inc_count(VM_derivation_count& inc);
+  void dec_count(VM_derivation_count& inc);
+  void add_count(VM_derivation_count& inc);
+
+  VM_depth_t get_depth(simpleTuple* s);
+  
+  size_t storage_size(simpleTuple* s);
+
+  void pack(UTILS_byte *, size_t, int *);
+   
+  static simple_tuple* unpack(simpleTuple *, VM_predicate *, UTILS_byte *, size_t, int *, VM_program *);
+
+  static simple_tuple* create_new(VM_tuple *tuple, VM_predicate *pred, VM_depth_t depth);
+
+  static simple_tuple* remove_new(VM_tuple *tuple, VM_predicate *pred, VM_depth_t depth);
+   
+  static void wipeout(simple_tuple *stpl) 
+  { VM_tuple_destroy(get_tuple(stpl), get_predicate(stpl)); delete stpl; }
+   
+  explicit simple_tuple(VM_tuple *_tuple, VM_predicate *_pred, VM_derivation_count _count, VM_depth_t _depth = 0);
+  
+  explicit simple_tuple(simpleTuple* s);
+#ifdef __cplusplus
+}
+#endif   
+
+#endif

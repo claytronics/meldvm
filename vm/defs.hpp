@@ -1,6 +1,6 @@
 
-#ifndef DEFS_HPP
-#define DEFS_HPP
+#ifndef VM_DEFS_HPP
+#define VM_DEFS_HPP
 
 #include <cstring>
 #include <stdint.h>

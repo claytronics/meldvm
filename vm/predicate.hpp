@@ -7,7 +7,7 @@
 #include <assert.h>
 
 #ifdef BLINKYBLOCKS
-#include "db/linked_list.hpp"
+# include "c-db/c-linked_list.hpp"
 #endif
 #include "vm/types.hpp"
 #include "vm/defs.hpp"

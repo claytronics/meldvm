@@ -1,4 +1,5 @@
-#include "linked_list.hpp"
+#include "c-db/c-linked_list.hpp"
+#include "db/linked_list.hpp"
 
 // Finds a tuple in the list - returns the node which contains it.
 // If a **prev node has been given as argument, the function makes it point to the node before the matching node for deletion.
