@@ -9,6 +9,7 @@ LIBRARY_DIRS =
 ARCH = -march=x86-64
 FLAGS =
 LIBS = 
+BB = true
 
 ifeq ($(RELEASE), true)
 	DEBUG =
@@ -22,6 +23,10 @@ endif
 ifeq ($(JIT), true)
 	FLAGS += -DUSE_JIT
 	LIBS += -L/usr/local/lib/x86_64 -ljit
+endif
+
+ifeq ($(BB), true)
+	FLAGS += -DBLINKYBLOCKS
 endif
 
 WARNINGS = -Wall -Wextra #-Werror
@@ -56,7 +61,25 @@ CXXFLAGS = $(CFLAGS)
 LDFLAGS = $(PROFILING) $(LIBRARY_DIRS) $(LIBRARIES)
 COMPILE = $(CXX) $(CXXFLAGS) $(OBJS)
 
-SRCS = utils/utils.cpp \
+SRCS = vm/exec.cpp \
+	vm/dummy-external.cpp \
+	vm/dummy-program.cpp \
+	vm/dummy-rule_matcher.cpp \
+	vm/dummy-state.cpp \
+	vm/dummy-tuple.cpp \
+	db/dummy-database.cpp \
+	db/dummy-hash_table.cpp \
+	db/dummy-node.cpp \
+	db/dummy-trie.cpp \
+	db/dummy-tuple.cpp \
+	mem/dummy-center.cpp \
+	process/dummy-machine.cpp \
+	sched/dummy-base.cpp \
+	stat/dummy-stat.cpp \
+	utils/dummy-fs.cpp \
+	dummy-interface.cpp
+
+	#utils/utils.cpp \
 		 	utils/types.cpp \
 			utils/fs.cpp \
 			 vm/program.cpp \
@@ -105,9 +128,12 @@ SRCS = utils/utils.cpp \
 			 ui/client.cpp \
 			 interface.cpp \
 			 sched/sim.cpp \
-			 jit/build.cpp \
-			 db/linked_list.c \
-			 db/linked_list_cpp.cpp 
+			 jit/build.cpp 
+
+#ifeq ($(BB), true)
+#	SRCS += db/linked_list.c \
+#	       db/linked_list_cpp.cpp
+#endif
 
 # Dummy files:
 #vm/exec.cpp \

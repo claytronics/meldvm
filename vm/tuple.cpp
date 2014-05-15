@@ -227,16 +227,15 @@ tuple::to_str(const vm::predicate *pred) const
 void
 tuple::print(ostream& cout, const vm::predicate *pred) const
 {
-   assert(pred != NULL);
-
-	if(pred->is_persistent_pred())
+  assert(pred != NULL);
+   
+   if(pred->is_persistent_pred())
 		cout << "!";
-   
+
    cout << pred->get_name() << "(";
-   
    for(field_num i = 0; i < pred->num_fields(); ++i) {
       if(i != 0)
-         cout << ", ";
+	cout << ", ";
 
       print_tuple_type(cout, get_field(i), pred->get_field_type(i));
    }

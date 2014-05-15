@@ -819,6 +819,7 @@ execute_olinear_iter(const reg_num reg, match* m, const pcounter pc, const pcoun
 
       if(TO_FINISH(ret)) {
          db::intrusive_list<vm::tuple>::iterator it(p.iterator);
+
          local_tuples->erase(it);
          vm::tuple::destroy(match_tuple, pred);
          if(ret == RETURN_LINEAR)
@@ -828,7 +829,7 @@ execute_olinear_iter(const reg_num reg, match* m, const pcounter pc, const pcoun
       } else {
          match_tuple->will_not_delete();
       }
-next_tuple:
+   next_tuple:
       // removed item from the list because it is no longer needed
       it = tpls.erase(it);
    }

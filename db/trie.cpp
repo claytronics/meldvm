@@ -982,7 +982,13 @@ tuple_trie::delete_tuple(vm::tuple *tpl, vm::predicate *pred, const derivation_c
    if(leaf->to_delete()) {
       // for this branch, we will decrease number_of_references later
       // in commit_delete
-      return delete_info((tuple_trie_leaf*)leaf, this, true, node, many);
+     
+     printf("\n action: DELETE");
+     printf("\n predlist: "); pred->print_simple(cout);
+     delete_from_list(pred->get_linked_list(), tpl);
+     print_list(pred->get_linked_list());
+ 
+     return delete_info((tuple_trie_leaf*)leaf, this, true, node, many);
    } else {
       number_of_references -= many;
       return delete_info((tuple_trie_leaf*)leaf, this, false, node, many);

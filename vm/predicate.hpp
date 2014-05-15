@@ -6,9 +6,9 @@
 #include <vector>
 #include <assert.h>
 
-//#ifdef BLINKYBLOCKS
+#ifdef BLINKYBLOCKS
 #include "db/linked_list.hpp"
-//#endif
+#endif
 #include "vm/types.hpp"
 #include "vm/defs.hpp"
 #include "utils/types.hpp"
@@ -76,9 +76,9 @@ private:
    field_num hash_argument;
 
    // Linked tuple list to store tuples on Blinky Block version of vm
-   //#ifdef BLINKYBLOCKS
+   #ifdef BLINKYBLOCKS
    linked_list *tpl_list;
-   //#endif
+   #endif
 
    // index of this predicate's arguments in the whole set of program's predicates
    size_t argument_position;
@@ -169,7 +169,17 @@ public:
    {
       return argument_position;
    }
-   
+
+   inline void set_linked_list(linked_list *ls)
+   {
+     tpl_list = ls;
+   }
+
+   inline linked_list* get_linked_list(void) const
+   {
+     return tpl_list;
+   }   
+
    void print_simple(std::ostream&) const;
    void print(std::ostream&) const;
 

@@ -10,7 +10,7 @@ search_in_list(linked_list *ls, VM_TUPLE_PTR tpl, list_node **prev)
   bool found = false;
       
   while(ptr != NULL) {
-    if(list_tuple_equal(ptr->tuplePtr, tpl, ls->root_predicate)) {
+    if(list_tuple_equal(ptr->tuple_ptr, tpl, ls->root_predicate)) {
       found = true;
       break;
     }
@@ -31,15 +31,15 @@ search_in_list(linked_list *ls, VM_TUPLE_PTR tpl, list_node **prev)
 }
 
 // Delete a node from the list
-int 
+bool
 delete_from_list(linked_list *ls, VM_TUPLE_PTR tpl)
 {
-  list_node *prev = NULL;
+  list_node *prev = NULL; // Pointer to node previous to the one to delete
   list_node *del = NULL;
 
   del = search_in_list(ls, tpl, &prev);
   if(del == NULL)
-    return -1;
+    return false; // Node already deleted
   else {
     if(prev != NULL)
       prev->next = del->next;
@@ -53,16 +53,16 @@ delete_from_list(linked_list *ls, VM_TUPLE_PTR tpl)
 free(del);
 del = NULL;
 
-return 0;
+return true;
 }
   
 // Add a new node at the end of the list, after current tail
-void 
+bool
 add_last(linked_list *ls, VM_TUPLE_PTR tpl) 
 {
   Node *newNode = (list_node*)malloc(sizeof(list_node));
  
-  newNode->tuplePtr = tpl;
+  newNode->tuple_ptr = tpl;
   newNode->next = NULL;
 
   if(ls->head == NULL)
@@ -71,6 +71,7 @@ add_last(linked_list *ls, VM_TUPLE_PTR tpl)
     ls->tail->next = newNode;
     
   ls->tail = newNode;
+  return true;
 }
   
 // Create new list for predicate pred
@@ -92,12 +93,13 @@ print_list(linked_list *ls)
 {
   list_node *ptr = ls->head;
 
-  printf("\n ------- Beginning of list ------- \n");
+  //printf("\n ------- Beginning of list ------- \n");
   while(ptr != NULL) {
-    print_tuple(ptr->tuplePtr, ls->root_predicate);
+    print_tuple(ptr->tuple_ptr, ls->root_predicate);
+    printf("\n");
     ptr = ptr->next;
   }
-  printf("\n ------- End of List ------- \n");
+  printf(" -------    End of List    ------- \n");
 
   return;
 }

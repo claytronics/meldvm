@@ -157,7 +157,7 @@ state::search_for_negative_tuple_partial_agg(db::simple_tuple *stpl)
             stpl2->get_count() == -1 && tpl2->equal(*tpl, pred))
       {
          store->persistent_tuples.erase(it);
-         return stpl2;
+	 return stpl2;
       }
    }
 
@@ -184,7 +184,7 @@ state::search_for_negative_tuple_normal(db::simple_tuple *stpl)
       if(pred1 == pred2 && stpl2->get_count() == -1 && tpl2->equal(*tpl, pred1))
       {
          store->persistent_tuples.erase(it);
-         return stpl2;
+	 return stpl2;
       }
    }
 
@@ -208,7 +208,7 @@ state::search_for_negative_tuple_full_agg(db::simple_tuple *stpl)
       if(pred1 == pred2 && stpl2->is_aggregate() && stpl2->get_count() == -1 && tpl2->equal(*tpl, pred1))
       {
          store->persistent_tuples.erase(it);
-         return stpl2;
+	 return stpl2;
       }
    }
 
