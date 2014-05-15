@@ -12,6 +12,31 @@
 #include <boost/mpi.hpp>
 #endif
 
+#if 0
+//////////////////////////////
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+VM_tuple* DB_get_tuple(simpleTuple* s);
+
+#ifdef __cplusplus
+}
+#endif
+////////////////////////////// c++ version
+VM_tuple* DB_get_tuple(simpleTuple* s)
+{
+return s->get_tuple();
+}
+////////////////////////////////////////////////////////////////
+for s in orig-*/*.hpp orig-*/*.cpp; do
+   d=dummy-${s#orig-}
+   sed -e 's/vm::tuple/VM_tuple/g' < $s > $d
+   sed -e 's/vm::predicate/VM_predicate/g' < $s > $d
+done
+#endif
+
+
 #include "vm/defs.hpp"
 #include "vm/predicate.hpp"
 #include "vm/tuple.hpp"
@@ -28,7 +53,7 @@ public:
 
    MEM_METHODS(simple_tuple)
 
-   inline vm::tuple* get_tuple(void) const {}
+   //   inline vm::tuple* get_tuple(void) const {}
    
    inline vm::strat_level get_strat_level(void) const {}
 
