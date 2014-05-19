@@ -3,6 +3,8 @@
 #include "process/remote.hpp"
 #include "sched/common.hpp"
 
+#include "c-db/c-tuple.hpp"
+
 using namespace db;
 using namespace vm;
 using namespace process;
@@ -15,7 +17,7 @@ void
 serial_local::new_agg(work& w)
 {
    db::simple_tuple *stpl(w.get_tuple());
-   new_work(w.get_node(), w.get_node(), stpl->get_tuple(), stpl->get_predicate(), stpl->get_count(), stpl->get_depth());
+   new_work(w.get_node(), w.get_node(), (vm::tuple*)DB_STPL_get_tuple(stpl), (vm::predicate*)DB_STPL_get_predicate(stpl), DB_STPL_get_count(stpl), DB_STPL_get_depth(stpl));
    delete stpl;
 }
 

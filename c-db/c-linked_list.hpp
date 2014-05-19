@@ -1,5 +1,5 @@
 
-#ifndef DB_LINKED_LIST_HPP
+#ifndef C_DB_LINKED_LIST_HPP
 #define C_DB_LINKED_LIST_HPP
 
 #include <stdio.h>
@@ -9,7 +9,10 @@
 
 #include <iostream>
 
+#ifdef __cplusplus
 extern "C" {  
+#endif
+
 #define VM_TUPLE_PTR void*
 #define VM_PRE_PTR void*
 
@@ -31,5 +34,9 @@ extern "C" {
   bool add_last(linked_list *ls, void *tpl);
   linked_list* create_list(void *pred);
   void print_list(linked_list *ls);
+
+#ifdef __cplusplus
 }
+#endif
+
 #endif

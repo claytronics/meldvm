@@ -76,7 +76,7 @@ struct temporary_store
 
       inline void register_fact(db::simple_tuple *stpl)
       {
-         register_tuple_fact(stpl->get_predicate(), stpl->get_count());
+	register_tuple_fact((vm::predicate*)DB_STPL_get_predicate(stpl), DB_STPL_get_count(stpl));
       }
 
       inline void register_tuple_fact(vm::predicate *pred, const vm::ref_count count)
@@ -86,7 +86,7 @@ struct temporary_store
 
       inline void deregister_fact(db::simple_tuple *stpl)
       {
-         deregister_tuple_fact(stpl->get_predicate(), stpl->get_count());
+	deregister_tuple_fact((vm::predicate*)DB_STPL_get_predicate(stpl), DB_STPL_get_count(stpl));
       }
 
       inline void deregister_tuple_fact(vm::predicate *pred, const vm::ref_count count)

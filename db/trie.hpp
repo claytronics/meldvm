@@ -15,6 +15,8 @@
 #include "vm/match.hpp"
 #include "vm/types.hpp"
 
+#include "c-db/c-tuple.hpp"
+
 namespace db
 {
    
@@ -379,15 +381,15 @@ public:
    
    explicit tuple_trie_leaf(simple_tuple *_tpl):
       trie_leaf(),
-      tpl(_tpl->get_tuple()),
+      tpl((vm::tuple*)DB_STPL_get_tuple(_tpl)),
       count(0),
       used(0)
    {
-      if(_tpl->get_predicate()->is_cycle_pred())
+     if(((vm::predicate*)DB_STPL_get_predicate(_tpl))->is_cycle_pred())
          depths = new depth_counter();
       else
          depths = NULL;
-      add_new(_tpl->get_depth(), _tpl->get_count());
+      add_new(DB_STPL_get_depth(_tpl), DB_STPL_get_count(_tpl));
    }
 
    virtual void destroy(vm::predicate *pred)

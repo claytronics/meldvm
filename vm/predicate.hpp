@@ -8,6 +8,7 @@
 
 #ifdef BLINKYBLOCKS
 # include "c-db/c-linked_list.hpp"
+# include "c-defs.hpp"
 #endif
 #include "vm/types.hpp"
 #include "vm/defs.hpp"

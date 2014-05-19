@@ -31,9 +31,9 @@ protected:
    
 public:
    
-   inline vm::tuple* get_underlying_tuple(void) const { return get_tuple()->get_tuple(); }
+  inline vm::tuple* get_underlying_tuple(void) const { return (vm::tuple*)DB_STPL_get_tuple(get_tuple()); }
    inline db::simple_tuple* get_tuple(void) const { return tuple; }
-   inline vm::strat_level get_strat_level(void) const { return tuple->get_strat_level(); }
+  inline vm::strat_level get_strat_level(void) const { return DB_STPL_get_strat_level(tuple); }
    inline bool force_aggregate(void) const { return mod & mods::FORCE_AGGREGATE; }
    inline bool locally_generated(void) const { return mod & mods::LOCAL_TUPLE; }
    

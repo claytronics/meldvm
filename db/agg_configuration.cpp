@@ -1,6 +1,8 @@
 
 #include "db/agg_configuration.hpp"
 
+#include "c-db/c-tuple.hpp"
+
 using namespace std;
 using namespace vm;
 using namespace runtime;
@@ -378,18 +380,18 @@ agg_configuration::generate(predicate *pred, const aggregate_type typ, const fie
    if(corresponds == NULL) {
       // new
       if(generated != NULL) {
-         cont.push_back(simple_tuple::create_new(generated, pred, depth));
+	cont.push_back((db::simple_tuple*)DB_STPL_create_new(generated, pred, depth));
          last_depth = depth;
       }
    } else if (generated == NULL) {
       if(corresponds != NULL) {
-         cont.push_back(simple_tuple::remove_new(corresponds, pred, last_depth));
+	cont.push_back((db::simple_tuple*)DB_STPL_remove_new(corresponds, pred, last_depth));
          last_depth = 0;
       }
    } else {
       if(!(corresponds->equal(*generated, pred))) {
-         cont.push_back(simple_tuple::remove_new(corresponds, pred, last_depth));
-         cont.push_back(simple_tuple::create_new(generated, pred, depth));
+	cont.push_back((db::simple_tuple*)DB_STPL_remove_new(corresponds, pred, last_depth));
+	cont.push_back((db::simple_tuple*)DB_STPL_create_new(generated, pred, depth));
          last_depth = depth;
       }
    }
